@@ -8,11 +8,17 @@ import { EmployeeService } from 'src/app/shared/employee.service';
   ]
 })
 export class EmployeeFormComponent {
+  submitted: boolean = false;
   constructor(public service: EmployeeService) { }
 
   onSubmit() {
-    if (this.service.employeeForm.valid)
-      console.log(this.service.employeeForm.value);
+    this.submitted = true;
+    if (this.service.employeeForm.valid){
+      this.service.postEmployee().subscribe(res=>{
+        console.log('Got a response from the server!');
+        console.log(res);
+      })
+    }
 
   }
 }
