@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Employee } from 'src/app/shared/employee.model';
 import { EmployeeService } from 'src/app/shared/employee.service';
 
 @Component({
@@ -14,11 +15,15 @@ export class EmployeeFormComponent {
   onSubmit() {
     this.submitted = true;
     if (this.service.employeeForm.valid){
-      this.service.postEmployee().subscribe(res=>{
-        console.log('Got a response from the server!');
-        console.log(res);
+      this.service.postEmployee().subscribe(()=>{
+        this.service.fetchEmployees();
+        this.resetForm();
       })
     }
 
+  }
+  resetForm() {
+    this.service.employeeForm.reset(new Employee());
+    this.submitted = false;
   }
 }

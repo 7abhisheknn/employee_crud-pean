@@ -3,23 +3,32 @@ import { Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { catchError } from 'rxjs';
 import { throwError } from 'rxjs/internal/observable/throwError';
+import { Employee } from './employee.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeeService {
 
+  list: Employee[] =[];
+
   constructor(private fb:FormBuilder, private http: HttpClient) { }
 
   readonly baseURL = 'http://localhost:3000/api/employees/'
 
   employeeForm = this.fb.group({
-    _id: [null],
+    e_id: [0],
     e_name: ['',Validators.required],
     e_position: ['',Validators.required],
     e_location: [''],
-    e_salary: ['',Validators.required]
+    e_salary: [0,Validators.required]
   })
+
+  fetchEmployees(){
+    this.http.get(this.baseURL).pipe(catchError(this.handleError)).subscribe(data=>{
+      this.list = data as Employee[];
+    })
+  }
 
   postEmployee(){
     return this.http.post(this.baseURL, this.employeeForm.value).pipe(catchError(this.handleError))
