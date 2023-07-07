@@ -5,3 +5,5 @@ export class Employee {
     e_location: string='';
     e_salary: number=0;
 }
+
+

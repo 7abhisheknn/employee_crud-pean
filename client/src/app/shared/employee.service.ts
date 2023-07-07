@@ -33,6 +33,12 @@ export class EmployeeService {
   postEmployee(){
     return this.http.post(this.baseURL, this.employeeForm.value).pipe(catchError(this.handleError))
   }
+  putEmployee(){
+    return this.http.put(this.baseURL+this.employeeForm.get('e_id')?.value, this.employeeForm.value).pipe(catchError(this.handleError))
+  }
+  deleteEmployee(e_id: number){
+    return this.http.delete(this.baseURL+e_id).pipe(catchError(this.handleError))
+  }
 
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {

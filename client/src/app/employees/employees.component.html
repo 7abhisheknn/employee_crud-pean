@@ -23,10 +23,10 @@
                         <td>{{employee.e_name}}</td>
                         <td>{{employee.e_position}}</td>
                         <td>
-                            <button class="btn btn-sm btn-primary" >
+                            <button (click)="populateForm(employee)" class="btn btn-sm btn-primary" >
                                 <i class="fa fa-pencil"></i>
                             </button>
-                            <button class="btn btn-sm btn-danger">
+                            <button (click)="onDelete(employee.e_id)" class="btn btn-sm btn-danger">
                                 <i class="fa fa-trash"></i>
                             </button>
                         </td>
