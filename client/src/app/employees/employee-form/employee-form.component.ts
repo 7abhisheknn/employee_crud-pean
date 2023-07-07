@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Employee } from 'src/app/shared/employee.model';
+import { EmployeeService } from 'src/app/shared/employee.service';
 
 @Component({
   selector: 'app-employee-form',
@@ -7,5 +9,21 @@ import { Component } from '@angular/core';
   ]
 })
 export class EmployeeFormComponent {
+  submitted: boolean = false;
+  constructor(public service: EmployeeService) { }
 
+  onSubmit() {
+    this.submitted = true;
+    if (this.service.employeeForm.valid){
+      this.service.postEmployee().subscribe(()=>{
+        this.service.fetchEmployees();
+        this.resetForm();
+      })
+    }
+
+  }
+  resetForm() {
+    this.service.employeeForm.reset(new Employee());
+    this.submitted = false;
+  }
 }
